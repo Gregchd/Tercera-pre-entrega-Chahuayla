@@ -1,0 +1,14 @@
+{% extends "AppCoder/inicio.html" %}
+
+{% block formulario %}
+
+<ul>
+    {% for i in resultado %}
+
+    <li>{{ i.nombre }}</li>
+
+    {% endfor %}
+
+</ul>
+
+{% endblock %}
