@@ -12,4 +12,9 @@ urlpatterns = [
     path('r_alumno/', r_alum, name="r_alumno"),
     path('r_profe/', r_profe, name="r_profe"),
     path('r_curso/', r_curso, name="r_curso"),
+    # borrar
+    path('borrar_alum/<alumno_nombre>/', borrar_alum, name="Borrar_alum"),
+
+    # editar
+    path('edit_alum/<alumno_nombre>/', editar_alum, name="editar_alum"),
 ]

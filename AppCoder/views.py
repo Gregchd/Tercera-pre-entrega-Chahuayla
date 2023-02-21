@@ -98,14 +98,19 @@ def b_curso(request):
 
 # Ver resultados
 def r_alum(request):
-    if request.method == "GET":
+    """ if request.method == "GET":
 
         cicloB = request.GET["ciclo"]
         estR = Estudiante.objects.filter(ciclo__icontains=cicloB)
 
         return render(request, "AppCoder/r_alum.html", {"ciclo": cicloB, "resultado": estR})
 
-    return render(request, "AppCoder/r_alum.html")
+    return render(request, "AppCoder/r_alum.html") """
+
+    alumnos = Estudiante.objects.all()
+    contexto = {"alumnos": alumnos}
+
+    return render(request, "AppCoder/r_alum.html", contexto)
 
 
 def r_profe(request):
@@ -128,3 +133,42 @@ def r_curso(request):
         return render(request, "AppCoder/r_curso.html", {"comision": comisionB, "resultado": cursoR})
 
     return render(request, "AppCoder/r_curso.html")
+
+
+# Eliminar
+
+def borrar_alum(request, alumno_nombre):
+    alumno_elegido = Estudiante.objects.get(nombre=alumno_nombre)
+    alumno_elegido.delete()
+
+    return render(request, "AppCoder/inicio.html")
+
+
+# Edita
+
+def editar_alum(request, alumno_nombre):
+    alumno_elegido = Estudiante.objects.get(nombre=alumno_nombre)
+
+    if request.method == 'POST':
+        miForm = EstudianteForm(request.POST)
+
+        if miForm.is_valid():
+
+            infoDic = miForm.cleaned_data
+
+            alumno_elegido.nombre = infoDic["nombre"]
+            alumno_elegido.apellido = infoDic["apellido"]
+            alumno_elegido.correo = infoDic["correo"]
+            alumno_elegido.ciclo = infoDic["ciclo"]
+
+            alumno_elegido.save()
+
+            return render(request, "AppCoder/inicio.html")
+
+    else:
+        miForm = EstudianteForm(initial={"nombre": alumno_elegido.nombre,
+                                         "apellido": alumno_elegido.apellido,
+                                         "correo": alumno_elegido.correo,
+                                         "ciclo": alumno_elegido.ciclo})
+
+    return render(request, "AppCoder/edit_alum.html", {"form_alumno": miForm})

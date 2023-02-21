@@ -3,13 +3,18 @@
 {% block formulario %}
 
 <ul>
-    {% for i in resultado %}
+    {% for i in alumnos %}
 
-    <li>{{ i.nombre }}</li>
-
+    <li>
+        {{ i.nombre}} {{i.apellido }} 
+        <a href="{% url 'editar_alum' i.nombre %}">editar alumno</a>
+        <a href="{% url 'Borrar_alum' i.nombre %}">Borrar alumno</a>
+    </li>
+    
     {% endfor %}
 
 </ul>
+
 
 {% endblock %}
 
