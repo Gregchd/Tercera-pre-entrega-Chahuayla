@@ -1,0 +1,27 @@
+{% extends "AppCoder/inicio.html" %}
+
+{% block formulario %}
+
+<button>
+    <a href="{% url 'Crear cursos' %}">Crear curso</a>
+</button>
+
+<ul>
+    {% for i in object_list %}
+
+    <li>
+        {{ i.nombre}} {{i.comision }} 
+        <button>
+            <a href="{% url 'Editar cursos' i.id %}">Editar</a>
+        </button>
+        <button>
+            <a href="{% url 'Borrar cursos' i.id %}">Eliminar</a>
+        </button>
+    </li>
+    
+    {% endfor %}
+
+</ul>
+
+
+{% endblock %}

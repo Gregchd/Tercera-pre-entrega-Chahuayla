@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from AppCoder.models import *
 from AppCoder.forms import *
 
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 
 def home(request):
     return render(request, "AppCoder/inicio.html")
@@ -172,3 +175,28 @@ def editar_alum(request, alumno_nombre):
                                          "ciclo": alumno_elegido.ciclo})
 
     return render(request, "AppCoder/edit_alum.html", {"form_alumno": miForm})
+
+# models -
+
+
+class CursoLista(ListView):
+    model = Curso
+    template_name = "AppCoder/curso_list.html"
+
+
+class CursoCrear(CreateView):
+    model = Curso
+    fields = ["nombre", "comision", "matriculados"]
+    # Template se sobreentiende
+    success_url = "/AppCoder/cursos/lista"
+
+
+class CursoBorrar(DeleteView):
+    model = Curso
+    success_url = "/AppCoder/cursos/lista"
+
+
+class CursoEditar(UpdateView):
+    model = Curso
+    fields = ["nombre", "comision", "matriculados"]
+    success_url = "/AppCoder/cursos/lista"

@@ -17,4 +17,10 @@ urlpatterns = [
 
     # editar
     path('edit_alum/<alumno_nombre>/', editar_alum, name="editar_alum"),
+
+    # CRUD
+    path('cursos/lista', CursoLista.as_view(), name="Ver cursos"),
+    path('cursos/nuevo', CursoCrear.as_view(), name="Crear cursos"),
+    path('cursos/borrar/<int:pk>', CursoBorrar.as_view(), name="Borrar cursos"),
+    path('cursos/editar/<int:pk>', CursoEditar.as_view(), name="Editar cursos"),
 ]
